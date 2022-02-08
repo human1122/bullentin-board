@@ -14,4 +14,19 @@ RUN apt-get update && apt-get -y install \
     git \
     zip \
     unzip \
-    vim && docker-php-ext-install pdo_mysql
+    nodejs \
+    npm \
+    vim
+
+# php library install
+RUN docker-php-ext-install pdo_mysql
+
+# npm
+RUN update-alternatives --install /usr/bin/node node /usr/bin/nodejs 10
+RUN npm install
+RUN npm i -- save-dev laravel-mix@latest
+RUN npm install axios
+
+# activation
+RUN cd /etc/apache2/mods-enabled \
+    && ln -s ../mods-available/rewrite.load
