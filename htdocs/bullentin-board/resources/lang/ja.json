@@ -1,0 +1,12 @@
+{
+    "Register": "ユーザー登録",
+    "Name": "氏名",
+    "E-Mail Address": "メールアドレス",
+    "Password": "パスワード",
+    "Confirm Password": "パスワード (確認用)",
+    "Login": "ログイン",
+    "Logout": "ログアウト",
+    "You are logged in!": "ログインに成功しました！",
+    "Dashboard": "ダッシュボード",
+    "Home": "ホーム"
+}
