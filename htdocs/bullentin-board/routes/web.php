@@ -11,13 +11,10 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::group(['as' => 'sureddo.'], function() {
+    Route::get('/', 'SureddoController@index')->name('index');
+    Route::post('/', 'SureddoController@create')->name('create');
 });
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
 
 Auth::routes();
 

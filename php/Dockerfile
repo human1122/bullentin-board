@@ -25,6 +25,8 @@ RUN docker-php-ext-install pdo_mysql
 RUN update-alternatives --install /usr/bin/node node /usr/bin/nodejs 10
 RUN npm install
 RUN npm i -- save-dev laravel-mix@latest
+RUN npm i laravel-mix-glob --save-dev
+
 # localで実行しないと意味なかった
 # RUN npm install axios
 
