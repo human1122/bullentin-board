@@ -1,15 +1,14 @@
+// マッピング
 const mix = require('laravel-mix');
+const MixGlob = require('laravel-mix-glob');
 
-/*
- |--------------------------------------------------------------------------
- | Mix Asset Management
- |--------------------------------------------------------------------------
- |
- | Mix provides a clean, fluent API for defining some Webpack build steps
- | for your Laravel application. By default, we are compiling the Sass
- | file for the application as well as bundling up all the JS files.
- |
- */
+const mixGlob = new MixGlob({ mix });
 
-mix.js('resources/js/app.js', 'public/js')
-    .sass('resources/sass/app.scss', 'public/css');
+mixGlob.js('resources/js/**/*.compile.js', 'public/js', null, {
+    base: 'resources/js/'
+}).sass('resources/sass/**/*.compile.scss', 'public/css', null, {
+    base: 'resources/sass/'
+});
+
+// 一意のキー付与
+mix.version();
