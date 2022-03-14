@@ -2,13 +2,17 @@
 
 namespace App\Services;
 
+use App\Models\KoSureddo;
 use App\Models\Sureddo;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\DB;
 
 class SureddoService {
+    protected $KoSureddo;
     protected $Sureddo;
 
-    public function __construct(Sureddo $sureddo) {
+    public function __construct(KoSureddo $koSureddo, Sureddo $sureddo) {
+        $this->KoSureddo = $koSureddo;
         $this->Sureddo = $sureddo;
     }
 
@@ -29,13 +33,34 @@ class SureddoService {
      *
      * @param Int $user_id
      * @param String $text
-     * @return Sureddo
+     * @param Int $sureddo_id
+     * @return bool
      */
-    public function create(Int $user_id, String $text): Sureddo {
-        $result = $this->Sureddo->create([
-            'user_id' => $user_id,
-            'text' => $text,
-        ]);
+    public function create(Int $user_id, String $text, ?Int $sureddo_id): bool
+    {
+        $result = false;
+        DB::beginTransaction();
+        try {
+            if (empty($sureddo_id)) {
+                $sureddo = $this->Sureddo->create([
+                    'user_id' => $user_id,
+                    'text' => $text,
+                ]);
+            } else {
+                $ko_sureddo = $this->KoSureddo->create([
+                    'sureddo_id' => $sureddo_id,
+                    'user_id' => $user_id,
+                    'text' => $text,
+                ]);
+            }
+
+            $result = true;
+            DB::commit();
+        } catch(\Exception $e) {
+            $result = false;
+            logger($e->getMessage() . 'method:' . __METHOD__ . 'line:' . __LINE__);
+            DB::rollback();
+        }
 
         return $result;
     }
