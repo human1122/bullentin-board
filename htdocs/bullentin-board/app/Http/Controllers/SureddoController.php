@@ -47,8 +47,7 @@ class SureddoController extends Controller
      */
     public function create(SureddoRequest $request): RedirectResponse
     {
-        $text = empty($request->sureddo_id) ? $request->text : $request->henshin_text;
-        $result = $this->SureddoService->create($request->user_id, $text, $request->sureddo_id);
+        $result = $this->SureddoService->create($request->user_id, $request->text);
 
         return redirect('/')->with('result', $result);
     }
